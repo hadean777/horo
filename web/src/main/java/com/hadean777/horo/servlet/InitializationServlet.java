@@ -12,12 +12,16 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * 
  * @author Created by hadean777 <br>
  * @author Last modified by $Author: hadean777 $ <br>
- * @author Last modified on $Date: 2015-05-05 18:30:00 +0200 (Tue, 05 May 2015) $ at revision $Revision:   $ <br>
+ * @author Last modified on $Date: 2016-09-28 11:52:33 +0200 (Thu, 28 Sep 2016) $ at revision $Revision:   $ <br>
  */
 public class InitializationServlet extends HttpServlet {
 
 
-	private static final long serialVersionUID = -4988285932183785244L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3979521722144998476L;
+
 
 	@Override
 	public void destroy() {

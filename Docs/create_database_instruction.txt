@@ -1,0 +1,13 @@
+From command line run command:
+>sudo -u postgres psql
+
+In the postgres interpreter (look like "postgres=# ") run following commands:
+postgres=# CREATE DATABASE horo_dev;
+postgres=# CREATE USER horomgr WITH password 'horomgr_pwd';
+postgres=# GRANT ALL privileges ON DATABASE horo_dev TO horomgr;
+(to exit, type \q)
+
+Once DB and user is created, following commands can be executed:
+>psql -U miniboardmgr miniboard < create_tables_ddl.sql
+>psql -U miniboardmgr miniboard < insert_tables_dml.sql
+

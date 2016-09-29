@@ -40,15 +40,15 @@ public class LoggingAdvice implements Ordered {
 		order = p_order;
 	}
 	
-	@AfterThrowing(pointcut = "execution(* com.hadean777.miniboard.persistence.dao.hibernate.*.*(..))", 
+	@AfterThrowing(pointcut = "execution(* com.hadean777.horo.persistence.dao.hibernate.*.*(..))", 
 			throwing = "error")
 	public void executeDAOLevelLogAdivce(JoinPoint jp, Throwable error){
 		Logger logger = LoggerFactory.getLogger( jp.getTarget().getClass() );
 		logger.error( messageSource.getMessage( AppConstants.MSG_KEY_ERROR_LOG, null, null), error );
 	}
 	
-	@AfterThrowing(pointcut = "execution(* com.hadean777.miniboard.persistence.manager.impl.*.*(..)) "
-			+ " || execution(* com.hadean777.miniboard.auth.*.*(..))" + " || execution(* com.hadean777.miniboard.webapp.controller.*.*(..))", 
+	@AfterThrowing(pointcut = "execution(* com.hadean777.horo.persistence.manager.impl.*.*(..)) "
+			+ " || execution(* com.hadean777.horo.auth.*.*(..))" + " || execution(* com.hadean777.horo.webapp.controller.*.*(..))", 
 			throwing = "error")
 	public void executeBusinessLevelLogAdivce(JoinPoint jp, Throwable error){
 		if( !(error instanceof DAOException) ) {

@@ -5,7 +5,7 @@
   <artifactId>horo</artifactId>
   <packaging>war</packaging>
   <version>1.0.0.0</version>
-  <name>miniboard Maven Webapp</name>
+  <name>horo Maven Webapp</name>
   
   	<properties>
 		<org.springframework.version>4.0.6.RELEASE</org.springframework.version>
@@ -256,7 +256,7 @@
 		
 	  </dependencies>
   <build>
-		<finalName>miniboard</finalName>
+		<finalName>horo</finalName>
 		 <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
