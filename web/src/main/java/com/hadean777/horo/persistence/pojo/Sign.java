@@ -26,7 +26,7 @@ public class Sign implements Serializable {
 	@Column(name = "SIGN_ID", nullable = false)
 	private Long id;
 	
-	@Column(name = "NAME")
+	@Column(name = "NAME", nullable = false)
 	private String name;
 	
 	@Column(name = "DISPLAY_NAME")

@@ -10,11 +10,19 @@ import com.hadean777.horo.persistence.dao.*;
  * 
  * @author Created by hadean777 <br>
  * @author Last modified by $Author: hadean777 $ <br>
- * @author Last modified on $Date: 2015-05-05 18:30:00 +0200 (Tue, 05 May 2015) $ at revision $Revision:   $ <br>
+ * @author Last modified on $Date: 2016-10-12 18:30:00 +0200 (Thu, 12 Oct 2016) $ at revision $Revision:   $ <br>
  */
 @Component("daoFacade")
 public class DaoFacade {	
 	
+	@Autowired
+	private SignDAO signDao;
+	
+	
+	
+	public SignDAO getSignDao() {
+		return signDao;
+	}
 
 	
 }
