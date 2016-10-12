@@ -16,10 +16,8 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "SIGN_SEQ", sequenceName = "SIGN_SEQ")
 public class Sign implements Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1205772432003534136L;
+
+	private static final long serialVersionUID = -7543649375290181484L;
 
 	@Id
 	@GeneratedValue(generator="SIGN_SEQ")

@@ -45,7 +45,7 @@ public class HoroType implements Serializable {
 	}
 	
 	/**
-	 * Returns ID of Sign
+	 * Returns ID of HoroType
 	 * @return {@link Long}
 	 */
 	public Long getId(){
@@ -53,7 +53,7 @@ public class HoroType implements Serializable {
 	}
 	
 	/**
-	 * Sets ID of Sign
+	 * Sets ID of HoroType
 	 * @param p_uid {@link Long}
 	 */
 	public void setId(Long p_id){
@@ -61,7 +61,7 @@ public class HoroType implements Serializable {
 	}
 	
 	/**
-	 * Returns name of Sign
+	 * Returns name of HoroType
 	 * @return {@link String}
 	 */
 	public String getName(){
@@ -69,7 +69,7 @@ public class HoroType implements Serializable {
 	}
 	
 	/**
-	 * Sets name of Sign
+	 * Sets name of HoroType
 	 * @param p_name {@link String}
 	 */
 	public void setName(String p_name){
@@ -77,7 +77,7 @@ public class HoroType implements Serializable {
 	}
 	
 	/**
-	 * Returns description of Sign
+	 * Returns description of HoroType
 	 * @return {@link String}
 	 */
 	public String getDescription(){
@@ -85,7 +85,7 @@ public class HoroType implements Serializable {
 	}
 	
 	/**
-	 * Sets description of Sign
+	 * Sets description of HoroType
 	 * @param p_description {@link String}
 	 */
 	public void setDescription(String p_description){
@@ -94,7 +94,7 @@ public class HoroType implements Serializable {
 	
 
 	/**
-	 * Returns added TS of Sign
+	 * Returns added TS of HoroType
 	 * @return {@link Timestamp}
 	 */
 	public Timestamp getAddedTS() {
@@ -102,7 +102,7 @@ public class HoroType implements Serializable {
 	}
 	
 	/**
-	 * Returns modified TS of Sign
+	 * Returns modified TS of HoroType
 	 * @return {@link Timestamp}
 	 */
 	public Timestamp getModifiedTS() {
