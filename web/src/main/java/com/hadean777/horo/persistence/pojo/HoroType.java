@@ -16,9 +16,6 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "HORO_TYPE_SEQ", sequenceName = "HORO_TYPE_SEQ")
 public class HoroType implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2919419761072847358L;
 
 	@Id

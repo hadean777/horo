@@ -19,9 +19,6 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "HORO_TEXT_SEQ", sequenceName = "HORO_TEXT_SEQ")
 public class HoroText implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6619944741943402170L;
 
 	@Id
@@ -91,7 +88,7 @@ public class HoroText implements Serializable {
 	
 	/**
 	 * Returns horoType of HoroText
-	 * @return {@link String}
+	 * @return {@link HoroType}
 	 */
 	public HoroType getHoroType(){
 		return horoType;
@@ -107,7 +104,7 @@ public class HoroText implements Serializable {
 	
 	/**
 	 * Returns sign of HoroText
-	 * @return {@link String}
+	 * @return {@link Sign}
 	 */
 	public Sign getSign(){
 		return sign;
