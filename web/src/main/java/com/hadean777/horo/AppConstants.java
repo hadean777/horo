@@ -10,6 +10,7 @@ package com.hadean777.horo;
 public class AppConstants {
 
 	public final static String MANAGER_BEAN_NAVIG_MANAGER = "navigManager";
+	public final static String MANAGER_BEAN_CURRENT_STATUS_SERVICE = "currentStatusService";
 	
     public final static String MSG_KEY_ERROR_PARAMS_NULL = "error.params.null";
     public final static String MSG_KEY_ERROR_LOG = "common.error.log";
