@@ -1,7 +1,13 @@
 package com.hadean777.horo.manager;
 
-import com.hadean777.horo.persistence.pojo.HoroText;
+import java.util.Date;
 
+import org.springframework.stereotype.Service;
+
+import com.hadean777.horo.AppConstants;
+
+
+@Service(AppConstants.MANAGER_BEAN_CURRENT_STATUS_SERVICE)
 public class ConverterService {
 	
 	public com.hadean777.horo.model.CurrentStatus convertDaoToModel(com.hadean777.horo.persistence.pojo.CurrentStatus p){
@@ -9,7 +15,9 @@ public class ConverterService {
 		
 		if (p != null) {
 			result = new com.hadean777.horo.model.CurrentStatus();
-			result.setAssignedDate(p.getAssignedDate());
+			Date assignedDate = new Date(p.getAssignedDate() != null ? p.getAssignedDate().getTime() : null);
+			result.setAssignedDate(assignedDate);
+			result.setDisplayType(getDisplayType(p.getHoroType(), assignedDate));
 			result.setAries(getHotoText(p.getAries()));
 			result.setTaurus(getHotoText(p.getTaurus()));
 			result.setGemini(getHotoText(p.getGemini()));
@@ -27,13 +35,36 @@ public class ConverterService {
 		return result;
 	}
 	
-	private String getHotoText(HoroText horoText){
+	private String getHotoText(com.hadean777.horo.persistence.pojo.HoroText horoText){
 		String result = null;
 		
 		if (horoText != null) {
 			result = horoText.getBody();
 		}
 		
+		return result;
+	}
+	
+	private String getDisplayType(com.hadean777.horo.persistence.pojo.HoroType horoType, Date assignedDate){
+		
+		String result = null;
+		if (horoType != null && assignedDate != null) {
+			Date sysdate = new Date();
+			if (horoType.getName().equalsIgnoreCase(AppConstants.HORO_TYPE_DAILY)) {
+				int diff = assignedDate.compareTo(sysdate);
+				if (diff == -1) {
+					result = AppConstants.DISPLAY_TYPE_YESTERDAY;
+				} else if (diff == 0) {
+					result = AppConstants.DISPLAY_TYPE_TODAY;
+				} else if (diff == 1) {
+					result = AppConstants.DISPLAY_TYPE_TOMORROW;
+				} else if (diff == 2) {
+					result = AppConstants.DISPLAY_TYPE_AFTERTOMORROW;
+				}
+			} else if (horoType.getName().equalsIgnoreCase(AppConstants.HORO_TYPE_WEEKLY)) {
+				
+			}
+		}
 		return result;
 	}
 

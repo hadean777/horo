@@ -1,5 +1,8 @@
 package com.hadean777.horo.manager.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +23,25 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 	private ConverterService cs;
 	
 
-	public CurrentStatus getCurrentStatus() {
+	public List<CurrentStatus> getCurrentStatusList() {
 		
-		CurrentStatus currentStatus = null;
+		List<CurrentStatus> currentStatusList = null;
 		
+		List<com.hadean777.horo.persistence.pojo.CurrentStatus> daoStatusList = daoFacade.getCurrentStatusDao().getCurrentStatuses();
 		
-		
-		
+		if (daoStatusList != null){
+			currentStatusList = new ArrayList<CurrentStatus>(); 
+//			for (int i = 0; i < daoStatusList.size(); i++){
+//				currentStatusList.add(cs.convertDaoToModel(daoStatusList.get(i)));
+//			}
+			for (com.hadean777.horo.persistence.pojo.CurrentStatus element : daoStatusList){
+				currentStatusList.add(cs.convertDaoToModel(element));
+			}
+		}
 
 
 
-		return currentStatus;
+		return currentStatusList;
 	}
 
 }

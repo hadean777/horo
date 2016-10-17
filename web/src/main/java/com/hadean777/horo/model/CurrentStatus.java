@@ -5,7 +5,7 @@ import java.util.Date;
 public class CurrentStatus {
 	
 	private Date assignedDate;
-	private String horoType;
+	private String displayType;
 	private String aries;
 	private String taurus;
 	private String gemini;
@@ -32,12 +32,12 @@ public class CurrentStatus {
 		this.assignedDate = assignedDate;
 	}
 
-	public String getHoroType() {
-		return horoType;
+	public String getDisplayType() {
+		return displayType;
 	}
 
-	public void setHoroType(String horoType) {
-		this.horoType = horoType;
+	public void setDisplayType(String displayType) {
+		this.displayType = displayType;
 	}
 
 	public String getAries() {

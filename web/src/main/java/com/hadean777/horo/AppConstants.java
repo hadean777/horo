@@ -12,10 +12,25 @@ public class AppConstants {
 	public final static String MANAGER_BEAN_NAVIG_MANAGER = "navigManager";
 	public final static String MANAGER_BEAN_CURRENT_STATUS_SERVICE = "currentStatusService";
 	public final static String MANAGER_CURRENT_STATUS_MANAGER = "currentStatusManager";
+	public final static String MANAGER_BEAN_CONVERTER_SERVICE = "converterService";
 	
     public final static String MSG_KEY_ERROR_PARAMS_NULL = "error.params.null";
     public final static String MSG_KEY_ERROR_LOG = "common.error.log";
     
+    //Horo Types
+    public final static String HORO_TYPE_DAILY = "DAILY";
+    public final static String HORO_TYPE_WEEKLY = "WEEKLY";
+    public final static String HORO_TYPE_MONTHLY = "MONTHLY";
+    public final static String HORO_TYPE_YEARLY = "YEARLY";
+    
+    //Display Types
+    public final static String DISPLAY_TYPE_YESTERDAY = "YESTERDAY";
+    public final static String DISPLAY_TYPE_TODAY = "TODAY";
+    public final static String DISPLAY_TYPE_TOMORROW = "TOMORROW";
+    public final static String DISPLAY_TYPE_AFTERTOMORROW = "AFTERTOMORROW";
+    public final static String DISPLAY_TYPE_WEEK = "WEEK";
+    public final static String DISPLAY_TYPE_MONTH = "MONTH";
+    public final static String DISPLAY_TYPE_YEAR = "YEAR";
 
     //Date format
     public final static String DATE_FORMAT = "yyyy-MM-dd";
