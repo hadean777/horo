@@ -62,7 +62,11 @@ public class ConverterService {
 					result = AppConstants.DISPLAY_TYPE_AFTERTOMORROW;
 				}
 			} else if (horoType.getName().equalsIgnoreCase(AppConstants.HORO_TYPE_WEEKLY)) {
-				
+				result = AppConstants.DISPLAY_TYPE_WEEK;
+			} else if (horoType.getName().equalsIgnoreCase(AppConstants.HORO_TYPE_MONTHLY)) {
+				result = AppConstants.DISPLAY_TYPE_MONTH;
+			} else if (horoType.getName().equalsIgnoreCase(AppConstants.HORO_TYPE_YEARLY)) {
+				result = AppConstants.DISPLAY_TYPE_YEAR;				
 			}
 		}
 		return result;

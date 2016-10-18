@@ -31,9 +31,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		if (daoStatusList != null){
 			currentStatusList = new ArrayList<CurrentStatus>(); 
-//			for (int i = 0; i < daoStatusList.size(); i++){
-//				currentStatusList.add(cs.convertDaoToModel(daoStatusList.get(i)));
-//			}
 			for (com.hadean777.horo.persistence.pojo.CurrentStatus element : daoStatusList){
 				currentStatusList.add(cs.convertDaoToModel(element));
 			}
