@@ -1,6 +1,9 @@
 package com.hadean777.horo.manager;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +20,8 @@ public class ConverterService {
 			result = new com.hadean777.horo.model.CurrentStatus();
 			Date assignedDate = new Date(p.getAssignedDate() != null ? p.getAssignedDate().getTime() : null);
 			result.setAssignedDate(assignedDate);
-			result.setDisplayType(getDisplayType(p.getHoroType(), assignedDate));
+			//result.setDisplayType(getDisplayType(p.getHoroType(), assignedDate));
+			result.setDisplayType(p.getDisplayType());
 			result.setAries(getHotoText(p.getAries()));
 			result.setTaurus(getHotoText(p.getTaurus()));
 			result.setGemini(getHotoText(p.getGemini()));
@@ -35,6 +39,20 @@ public class ConverterService {
 		return result;
 	}
 	
+	public Map<String, com.hadean777.horo.model.CurrentStatus> convertCurrentStatusListToMap(List<com.hadean777.horo.model.CurrentStatus> p) {
+		
+		Map<String, com.hadean777.horo.model.CurrentStatus> result = null;
+		
+		if (p != null) {
+			result = new HashMap<String, com.hadean777.horo.model.CurrentStatus>();
+			for (com.hadean777.horo.model.CurrentStatus element : p) {
+				result.put(element.getDisplayType(), element);
+			}
+		}
+		
+		return result;
+	}
+	
 	private String getHotoText(com.hadean777.horo.persistence.pojo.HoroText horoText){
 		String result = null;
 		
@@ -45,7 +63,8 @@ public class ConverterService {
 		return result;
 	}
 	
-	private String getDisplayType(com.hadean777.horo.persistence.pojo.HoroType horoType, Date assignedDate){
+	
+/*	private String getDisplayType(com.hadean777.horo.persistence.pojo.HoroType horoType, Date assignedDate){
 		
 		String result = null;
 		if (horoType != null && assignedDate != null) {
@@ -70,6 +89,6 @@ public class ConverterService {
 			}
 		}
 		return result;
-	}
+	}*/
 
 }

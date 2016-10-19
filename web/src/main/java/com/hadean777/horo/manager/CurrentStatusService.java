@@ -41,5 +41,9 @@ public class CurrentStatusService {
 		}
 		
 	}
+	
+	public void updateCurrentStatus() {
+		
+	}
 
 }

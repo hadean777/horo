@@ -19,19 +19,18 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "CURRENT_STATUS_SEQ", sequenceName = "CURRENT_STATUS_SEQ")
 public class CurrentStatus implements Serializable {
 
-	private static final long serialVersionUID = -5161452127327944704L;
+	private static final long serialVersionUID = -1666621873210287791L;
 
 	@Id
 	@GeneratedValue(generator="CURRENT_STATUS_SEQ")
 	@Column(name = "CURRENT_STATUS_ID", nullable = false)
 	private Long id;
 	
-	@Column(name = "ASSIGNED_DATE")
+	@Column(name = "ASSIGNED_DATE", nullable = false)
 	private Date assignedDate;
 	
-	@ManyToOne
-	@JoinColumn(name = "HORO_TYPE_ID", nullable = false)
-	private HoroType horoType;
+	@Column(name = "DISPLAY_TYPE", nullable = false)
+	private String displayType;
 	
 	@ManyToOne
 	@JoinColumn(name = "ARIES", nullable = false)
@@ -127,19 +126,19 @@ public class CurrentStatus implements Serializable {
 	}
 	
 	/**
-	 * Returns horoType of CurrentStatus
-	 * @return {@link HoroType}
+	 * Returns displayType of CurrentStatus
+	 * @return {@link String}
 	 */
-	public HoroType getHoroType(){
-		return horoType;
+	public String getDisplayType(){
+		return displayType;
 	}
 	
 	/**
-	 * Sets horoType of CurrentStatus
-	 * @param p_horoType {@link HoroType}
+	 * Sets displayType of CurrentStatus
+	 * @param p_displayType {@link String}
 	 */
-	public void setHoroType(HoroType p_horoType){
-		horoType = p_horoType;
+	public void setDisplayType(String p_displayType){
+		displayType = p_displayType;
 	}
 	
 	/**
