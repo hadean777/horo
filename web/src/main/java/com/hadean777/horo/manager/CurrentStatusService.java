@@ -42,6 +42,11 @@ public class CurrentStatusService {
 		
 	}
 	
+	/**
+	 * For now it is duplicated method of CurrentStatusManagerImpl.updateCurrentStatusList 
+	 * TODO: remove it or update logic
+	 */
+
 	public void updateCurrentStatus() {
 		
 	}

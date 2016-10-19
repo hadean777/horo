@@ -42,11 +42,15 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		return currentStatusList;
 	}
 	
-	public void updateCurrentStatusList(List<CurrentStatus> p_currentStatusList) {
+//	public void updateCurrentStatusList(List<CurrentStatus> p_currentStatusList) {
+	public void updateCurrentStatusList() {
 		
+//		Map<String, CurrentStatus> currentStatusMap = cs.convertCurrentStatusListToMap(p_currentStatusList);
 		List<com.hadean777.horo.persistence.pojo.CurrentStatus> daoStatusList = daoFacade.getCurrentStatusDao().getCurrentStatuses();
 		
-		Map<String, CurrentStatus> currentStatusMap = cs.convertCurrentStatusListToMap(p_currentStatusList);
+		
+		//TODO: Complete this method
+
 		
 		for (com.hadean777.horo.persistence.pojo.CurrentStatus element : daoStatusList) {
 			

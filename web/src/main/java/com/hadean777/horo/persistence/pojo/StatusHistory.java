@@ -38,7 +38,7 @@ public class StatusHistory implements Serializable {
 	private HoroType horoType;
 	
 	@ManyToOne
-	@JoinColumn(name = "SIGN_ID", nullable = true)
+	@JoinColumn(name = "SIGN_ID", nullable = false)
 	private Sign sign;
 	
 	@Column(name = "ADDED_TS", insertable = false, updatable = false)
