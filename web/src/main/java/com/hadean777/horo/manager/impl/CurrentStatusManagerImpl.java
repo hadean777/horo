@@ -1,6 +1,8 @@
 package com.hadean777.horo.manager.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +52,13 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		
 		//TODO: Complete this method
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -1);
+		Date beginDate = new Date(calendar.getTime().getTime());
+		calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, +2);
+		Date endDate = new Date(calendar.getTime().getTime());
+		
 
 		
 		for (com.hadean777.horo.persistence.pojo.CurrentStatus element : daoStatusList) {
