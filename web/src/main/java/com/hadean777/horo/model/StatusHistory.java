@@ -18,6 +18,7 @@ public class StatusHistory {
 	public Date getAssignedDate() {
 		return assignedDate;
 	}
+	
 	public void setAssignedDate(Date assignedDate) {
 		this.assignedDate = assignedDate;
 	}

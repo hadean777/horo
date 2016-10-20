@@ -39,14 +39,32 @@ public class ConverterService {
 		return result;
 	}
 	
-	public Map<String, com.hadean777.horo.model.CurrentStatus> convertCurrentStatusListToMap(List<com.hadean777.horo.model.CurrentStatus> p) {
+	public Map<String, com.hadean777.horo.persistence.pojo.CurrentStatus> convertCurrentStatusListToMap(List<com.hadean777.horo.persistence.pojo.CurrentStatus> p) {
 		
-		Map<String, com.hadean777.horo.model.CurrentStatus> result = null;
+		Map<String, com.hadean777.horo.persistence.pojo.CurrentStatus> result = null;
 		
 		if (p != null) {
-			result = new HashMap<String, com.hadean777.horo.model.CurrentStatus>();
-			for (com.hadean777.horo.model.CurrentStatus element : p) {
+			result = new HashMap<String, com.hadean777.horo.persistence.pojo.CurrentStatus>();
+			for (com.hadean777.horo.persistence.pojo.CurrentStatus element : p) {
 				result.put(element.getDisplayType(), element);
+			}
+		}
+		
+		return result;
+	}
+	
+	/*
+	 * For single sign, for single date and single HoroType can be only one value of StatusHistory 
+	 * 
+	 */
+	public Map<String, com.hadean777.horo.persistence.pojo.StatusHistory> convertStatusHistoryListToMap(List<com.hadean777.horo.persistence.pojo.StatusHistory> p) {
+		
+		Map<String, com.hadean777.horo.persistence.pojo.StatusHistory> result = null;
+		
+		if (p != null) {
+			result = new HashMap<String, com.hadean777.horo.persistence.pojo.StatusHistory>();
+			for (com.hadean777.horo.persistence.pojo.StatusHistory element : p) {
+				result.put(element.getSign().getName(), element);
 			}
 		}
 		

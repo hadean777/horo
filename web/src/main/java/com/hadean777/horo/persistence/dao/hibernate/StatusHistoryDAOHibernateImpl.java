@@ -31,26 +31,24 @@ implements StatusHistoryDAO {
         return statusHistoryList;
 	}
 	
-	public StatusHistory getWeekyStatusHistoryByDate(Date p_date) throws DAOException{
+	public List<StatusHistory> getDailyStatusHistoryListByDate(Date p_date) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<StatusHistory> getWeekyStatusHistoryListByDate(Date p_date) throws DAOException{
 		//TODO: Complete this method
-		StatusHistory statusHistory = null;
-        List<StatusHistory> statusHistoryList = null;
-        try {
-            Query query = getSession().createQuery("from StatusHistory");
-            statusHistoryList = (List<StatusHistory>) query.list();
-        } catch (HibernateException e) {
-            throw new DAOException(e);
-        }
-        return statusHistory;
+        return null;
 	}
 
-	public StatusHistory getMonthyStatusHistoryByDate(Date p_date) throws DAOException{
+	public List<StatusHistory> getMonthyStatusHistoryListByDate(Date p_date) throws DAOException{
 		//TODO: Complete this method
 		return null;
 	}
 	
-	public StatusHistory getYearlyStatusHistoryByDate(Date p_date) throws DAOException{
+	public List<StatusHistory> getYearlyStatusHistoryListByDate(Date p_date) throws DAOException{
 		//TODO: Complete this method
 		return null;
 	}
+
 }
