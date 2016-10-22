@@ -1,5 +1,8 @@
 package com.hadean777.horo;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Application constants
  * 
@@ -45,6 +48,9 @@ public class AppConstants {
     public final static String CAPRICORN = "CAPRICORN";
     public final static String AQUARIUS = "AQUARIUS";
     public final static String PIESCES = "PIESCES";
+    //SignsList
+    public final static List<String> SIGNS = Arrays.asList(ARIES, TAURUS, GEMINI, CANCER, LEO, VIRGO, LIBRA, SCORPIO, SAGITTARIUS, CAPRICORN, AQUARIUS, PIESCES);
+    
 
     //Date format
     public final static String DATE_FORMAT = "yyyy-MM-dd";

@@ -115,14 +115,25 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 	}
 	
 	private void updateCurrentStatusWithNewHistories(com.hadean777.horo.persistence.pojo.CurrentStatus p_currentStatus, Date p_currentDate) {
+		
 		List<StatusHistory> dailyStatusHistories = daoFacade.getStatusHistoryDao().getDailyStatusHistoryListByDate(p_currentDate);
 		Map<String, StatusHistory> statusHistoryMap = cs.convertStatusHistoryListToMap(dailyStatusHistories);
 		p_currentStatus.setAssignedDate(p_currentDate);
 		List<String> unhandledSigns = new ArrayList<String>();
 		
-		StatusHistory statusHistory = statusHistoryMap.get(AppConstants.ARIES);
+		StatusHistory statusHistory = null;
+		
+		for (String sign : AppConstants.SIGNS) {
+			statusHistory = statusHistoryMap.get(sign);
+			if (statusHistory != null) {
+				setCurrentStatusHoroText(p_currentStatus, sign, statusHistory.getHoroText());
+			} else {
+				unhandledSigns.add(sign);
+			}
+		}
+
+/*		StatusHistory statusHistory = statusHistoryMap.get(AppConstants.ARIES);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setAries(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.ARIES);
@@ -130,7 +141,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		statusHistory = statusHistoryMap.get(AppConstants.TAURUS);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setTaurus(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.TAURUS);
@@ -138,7 +148,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		statusHistory = statusHistoryMap.get(AppConstants.GEMINI);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setGemini(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.GEMINI);
@@ -146,7 +155,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		statusHistory = statusHistoryMap.get(AppConstants.CANCER);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setCancer(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.CANCER);
@@ -154,7 +162,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		statusHistory = statusHistoryMap.get(AppConstants.LEO);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setLeo(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.LEO);
@@ -162,7 +169,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 		statusHistory = statusHistoryMap.get(AppConstants.VIRGO);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setVirgo(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.VIRGO);
@@ -170,7 +176,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 		statusHistory = statusHistoryMap.get(AppConstants.LIBRA);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setLibra(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.LIBRA);
@@ -178,7 +183,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 		statusHistory = statusHistoryMap.get(AppConstants.SCORPIO);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setScorpio(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.SCORPIO);
@@ -186,7 +190,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 		statusHistory = statusHistoryMap.get(AppConstants.SAGITTARIUS);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setSagittarius(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.SAGITTARIUS);
@@ -194,7 +197,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 		statusHistory = statusHistoryMap.get(AppConstants.CAPRICORN);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setCapricorn(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.CAPRICORN);
@@ -202,7 +204,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 		statusHistory = statusHistoryMap.get(AppConstants.AQUARIUS);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setAquarius(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.AQUARIUS);
@@ -210,15 +211,52 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 		statusHistory = statusHistoryMap.get(AppConstants.PIESCES);
 		if (statusHistory != null) {
-			statusHistory.getHoroText();
 			p_currentStatus.setPiesces(statusHistory.getHoroText());
 		} else {
 			unhandledSigns.add(AppConstants.PIESCES);
-		}
+		}*/
 		
-		if (!unhandledSigns.isEmpty()){
+		if (!unhandledSigns.isEmpty()) {
 			List<HoroText> unsignedHoros = daoFacade.getHoroTextDao().getUnsignedHoroTextList();
-			// To be continued...
+			
+			if (unsignedHoros.size() >= unhandledSigns.size()) {
+				for (int i = 0; i < unhandledSigns.size(); i++) {
+					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
+				}
+			} else {
+				for (int i = 0; i < unsignedHoros.size(); i++) {
+					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
+				}
+			}
+		}
+	}
+	
+	private void setCurrentStatusHoroText(com.hadean777.horo.persistence.pojo.CurrentStatus p_currentStatus, String p_sign, HoroText p_horoText) {
+		
+		if (p_sign.equalsIgnoreCase(AppConstants.ARIES)) {
+			p_currentStatus.setAries(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.TAURUS)) {
+			p_currentStatus.setTaurus(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.GEMINI)) {
+			p_currentStatus.setGemini(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.CANCER)) {
+			p_currentStatus.setCancer(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.LEO)) {
+			p_currentStatus.setLeo(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.VIRGO)) {
+			p_currentStatus.setVirgo(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.LIBRA)) {
+			p_currentStatus.setLibra(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.SCORPIO)) {
+			p_currentStatus.setScorpio(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.SAGITTARIUS)) {
+			p_currentStatus.setSagittarius(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.CAPRICORN)) {
+			p_currentStatus.setCapricorn(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.AQUARIUS)) {
+			p_currentStatus.setAquarius(p_horoText);
+		} else if (p_sign.equalsIgnoreCase(AppConstants.PIESCES)) {
+			p_currentStatus.setPiesces(p_horoText);
 		}
 	}
 
