@@ -52,42 +52,65 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		List<com.hadean777.horo.persistence.pojo.CurrentStatus> daoStatusList = daoFacade.getCurrentStatusDao().getCurrentStatuses();
 		
 		//TODO: Complete this method
-/*		Date beginDate = getSqlDateByOffset(-1);
-		Date endDate = getSqlDateByOffset(2);
-		
-		List<StatusHistory> dailyStatusHistories = daoFacade.getStatusHistoryDao().getDailyStatusHistoryListByInterval(beginDate, endDate);
-
-		Map<String, com.hadean777.horo.persistence.pojo.CurrentStatus> currentStatusMap = cs.convertCurrentStatusListToMap(daoStatusList);
-		
-		java.util.Date sysdate = new java.util.Date();
-		java.util.Date assignedDate = null;
-		com.hadean777.horo.persistence.pojo.CurrentStatus currentStatus = null;
-		for (StatusHistory element : dailyStatusHistories) {
-			assignedDate = new java.util.Date(element.getAssignedDate().getTime());
-			int diff = assignedDate.compareTo(sysdate);
-			if (diff == -1) {
-				//AppConstants.DISPLAY_TYPE_YESTERDAY;
-				currentStatus = currentStatusMap.get(AppConstants.DISPLAY_TYPE_YESTERDAY);
-				
-			} else if (diff == 0) {
-				//result = AppConstants.DISPLAY_TYPE_TODAY;
-			} else if (diff == 1) {
-				//result = AppConstants.DISPLAY_TYPE_TOMORROW;
-			} else if (diff == 2) {
-				//result = AppConstants.DISPLAY_TYPE_AFTERTOMORROW;
-			}
-		}*/
-		
+	
 		Map<String, com.hadean777.horo.persistence.pojo.CurrentStatus> currentStatusMap = cs.convertCurrentStatusListToMap(daoStatusList);
 		String displayType;
 		Date currentDate;
+		com.hadean777.horo.persistence.pojo.CurrentStatus currentStatus = null;
+		//Updating daily statuses
 		for (int i = -1; i < 3; i++) {
 			displayType = getDisplayTypeByOffset(i);
 			currentDate = getSqlDateByOffset(i);
-			com.hadean777.horo.persistence.pojo.CurrentStatus currentStatus = currentStatusMap.get(displayType);
-			updateCurrentStatusWithNewHistories(currentStatus, currentDate);
+			currentStatus = currentStatusMap.get(displayType);
+			updateCurrentStatusWithNewHistories(currentStatus, currentDate, AppConstants.HORO_TYPE_DAILY);
 		}
 		
+		//Updating weekly status
+		currentDate = getFirstDayOfWeek();
+		currentStatus = currentStatusMap.get(AppConstants.DISPLAY_TYPE_WEEK);
+		updateCurrentStatusWithNewHistories(currentStatus, currentDate, AppConstants.HORO_TYPE_WEEKLY);
+		
+		//Updating monthly status
+		currentDate = getFirstDayOfMonth();
+		currentStatus = currentStatusMap.get(AppConstants.DISPLAY_TYPE_MONTH);
+		updateCurrentStatusWithNewHistories(currentStatus, currentDate, AppConstants.HORO_TYPE_MONTHLY);
+		
+		//Updating yearly status
+		currentDate = getFirstDayOfYear();
+		currentStatus = currentStatusMap.get(AppConstants.DISPLAY_TYPE_YEAR);
+		updateCurrentStatusWithNewHistories(currentStatus, currentDate, AppConstants.HORO_TYPE_YEARLY);
+	}
+	
+	
+	private Date getFirstDayOfYear() {
+		Calendar calendar = Calendar.getInstance();
+		int year = Calendar.YEAR;
+		calendar.set(year, 1, 1);
+		Date result = new Date(calendar.getTime().getTime());
+		return result;
+	}
+	
+	private Date getFirstDayOfMonth() {
+		Calendar calendar = Calendar.getInstance();
+		int offset = Calendar.DAY_OF_MONTH - 1;
+		calendar.add(Calendar.DATE, offset);
+		Date result = new Date(calendar.getTime().getTime());
+		return result;
+	}
+	
+	//get date of monday for current week
+	private Date getFirstDayOfWeek() {
+		Calendar calendar = Calendar.getInstance();
+		int dayOfWeek = Calendar.DAY_OF_WEEK;
+		int offset = 0;
+		if (dayOfWeek == 1) {
+			offset = -6;
+		} else {
+			offset = (dayOfWeek - 2)*(-1);
+		}
+		calendar.add(Calendar.DATE, offset);
+		Date result = new Date(calendar.getTime().getTime());
+		return result;
 	}
 	
 	private Date getSqlDateByOffset(int p_offset) {
@@ -114,10 +137,10 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		return result;
 	}
 	
-	private void updateCurrentStatusWithNewHistories(com.hadean777.horo.persistence.pojo.CurrentStatus p_currentStatus, Date p_currentDate) {
+	private void updateCurrentStatusWithNewHistories(com.hadean777.horo.persistence.pojo.CurrentStatus p_currentStatus, Date p_currentDate, String p_type) {
 		
-		List<StatusHistory> dailyStatusHistories = daoFacade.getStatusHistoryDao().getDailyStatusHistoryListByDate(p_currentDate);
-		Map<String, StatusHistory> statusHistoryMap = cs.convertStatusHistoryListToMap(dailyStatusHistories);
+		List<StatusHistory> StatusHistories = daoFacade.getStatusHistoryDao().getStatusHistoryListByDateAndType(p_currentDate, p_type);
+		Map<String, StatusHistory> statusHistoryMap = cs.convertStatusHistoryListToMap(StatusHistories);
 		p_currentStatus.setAssignedDate(p_currentDate);
 		List<String> unhandledSigns = new ArrayList<String>();
 		
@@ -132,103 +155,24 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 			}
 		}
 
-/*		StatusHistory statusHistory = statusHistoryMap.get(AppConstants.ARIES);
-		if (statusHistory != null) {
-			p_currentStatus.setAries(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.ARIES);
-		}
-		
-		statusHistory = statusHistoryMap.get(AppConstants.TAURUS);
-		if (statusHistory != null) {
-			p_currentStatus.setTaurus(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.TAURUS);
-		}
-		
-		statusHistory = statusHistoryMap.get(AppConstants.GEMINI);
-		if (statusHistory != null) {
-			p_currentStatus.setGemini(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.GEMINI);
-		}
-		
-		statusHistory = statusHistoryMap.get(AppConstants.CANCER);
-		if (statusHistory != null) {
-			p_currentStatus.setCancer(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.CANCER);
-		}
-		
-		statusHistory = statusHistoryMap.get(AppConstants.LEO);
-		if (statusHistory != null) {
-			p_currentStatus.setLeo(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.LEO);
-		}
-
-		statusHistory = statusHistoryMap.get(AppConstants.VIRGO);
-		if (statusHistory != null) {
-			p_currentStatus.setVirgo(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.VIRGO);
-		}
-
-		statusHistory = statusHistoryMap.get(AppConstants.LIBRA);
-		if (statusHistory != null) {
-			p_currentStatus.setLibra(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.LIBRA);
-		}
-
-		statusHistory = statusHistoryMap.get(AppConstants.SCORPIO);
-		if (statusHistory != null) {
-			p_currentStatus.setScorpio(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.SCORPIO);
-		}
-
-		statusHistory = statusHistoryMap.get(AppConstants.SAGITTARIUS);
-		if (statusHistory != null) {
-			p_currentStatus.setSagittarius(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.SAGITTARIUS);
-		}
-
-		statusHistory = statusHistoryMap.get(AppConstants.CAPRICORN);
-		if (statusHistory != null) {
-			p_currentStatus.setCapricorn(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.CAPRICORN);
-		}
-
-		statusHistory = statusHistoryMap.get(AppConstants.AQUARIUS);
-		if (statusHistory != null) {
-			p_currentStatus.setAquarius(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.AQUARIUS);
-		}
-
-		statusHistory = statusHistoryMap.get(AppConstants.PIESCES);
-		if (statusHistory != null) {
-			p_currentStatus.setPiesces(statusHistory.getHoroText());
-		} else {
-			unhandledSigns.add(AppConstants.PIESCES);
-		}*/
-		
 		if (!unhandledSigns.isEmpty()) {
 			List<HoroText> unsignedHoros = daoFacade.getHoroTextDao().getUnsignedHoroTextList();
 			
+			int maxCount = 0;
 			if (unsignedHoros.size() >= unhandledSigns.size()) {
-				for (int i = 0; i < unhandledSigns.size(); i++) {
-					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
-				}
+				maxCount = unsignedHoros.size();
 			} else {
-				for (int i = 0; i < unsignedHoros.size(); i++) {
-					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
-				}
+				maxCount = unhandledSigns.size();
 			}
+			
+			for (int i = 0; i < maxCount; i++) {
+				setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
+			}
+
+				
 		}
+		
+		daoFacade.getCurrentStatusDao().saveOrUpdate(p_currentStatus);
 	}
 	
 	private void setCurrentStatusHoroText(com.hadean777.horo.persistence.pojo.CurrentStatus p_currentStatus, String p_sign, HoroText p_horoText) {

@@ -44,4 +44,11 @@ public interface StatusHistoryDAO extends GenericDAO<StatusHistory, Long> {
 	 */
     public  List<StatusHistory> getYearlyStatusHistoryListByDate(Date p_date) throws DAOException;
     
+    /**
+	 * Returns Yearly StatusHistory by date<br>
+	 * 
+	 * @return {@link  List<StatusHistory>}
+	 */
+    public  List<StatusHistory> getStatusHistoryListByDateAndType(Date p_date, String p_type) throws DAOException;
+    
 }

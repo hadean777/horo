@@ -51,4 +51,9 @@ implements StatusHistoryDAO {
 		return null;
 	}
 
+	public List<StatusHistory> getStatusHistoryListByDateAndType(Date p_date, String p_type) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
