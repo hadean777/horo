@@ -20,7 +20,6 @@ public class ConverterService {
 			result = new com.hadean777.horo.model.CurrentStatus();
 			Date assignedDate = new Date(p.getAssignedDate() != null ? p.getAssignedDate().getTime() : null);
 			result.setAssignedDate(assignedDate);
-			//result.setDisplayType(getDisplayType(p.getHoroType(), assignedDate));
 			result.setDisplayType(p.getDisplayType());
 			result.setAries(getHotoText(p.getAries()));
 			result.setTaurus(getHotoText(p.getTaurus()));
