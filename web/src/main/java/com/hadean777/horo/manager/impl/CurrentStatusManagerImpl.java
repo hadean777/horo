@@ -160,9 +160,9 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 			
 			int maxCount = 0;
 			if (unsignedHoros.size() >= unhandledSigns.size()) {
-				maxCount = unsignedHoros.size();
-			} else {
 				maxCount = unhandledSigns.size();
+			} else {
+				maxCount = unsignedHoros.size();
 			}
 			
 			for (int i = 0; i < maxCount; i++) {
