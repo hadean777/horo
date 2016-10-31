@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.hadean777.horo.AppConstants;
 
 
-@Service(AppConstants.MANAGER_BEAN_CURRENT_STATUS_SERVICE)
+@Service(AppConstants.MANAGER_BEAN_CONVERTER_SERVICE)
 public class ConverterService {
 	
 	public com.hadean777.horo.model.CurrentStatus convertDaoToModel(com.hadean777.horo.persistence.pojo.CurrentStatus p){
