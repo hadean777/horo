@@ -139,40 +139,41 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 	
 	private void updateCurrentStatusWithNewHistories(com.hadean777.horo.persistence.pojo.CurrentStatus p_currentStatus, Date p_currentDate, String p_type) {
 		
-		List<StatusHistory> StatusHistories = daoFacade.getStatusHistoryDao().getStatusHistoryListByDateAndType(p_currentDate, p_type);
-		Map<String, StatusHistory> statusHistoryMap = cs.convertStatusHistoryListToMap(StatusHistories);
-		p_currentStatus.setAssignedDate(p_currentDate);
-		List<String> unhandledSigns = new ArrayList<String>();
+		if (p_currentStatus != null) {
 		
-		StatusHistory statusHistory = null;
+			List<StatusHistory> StatusHistories = daoFacade.getStatusHistoryDao().getStatusHistoryListByDateAndType(p_currentDate, p_type);
+			Map<String, StatusHistory> statusHistoryMap = cs.convertStatusHistoryListToMap(StatusHistories);
+			p_currentStatus.setAssignedDate(p_currentDate);
+			List<String> unhandledSigns = new ArrayList<String>();
 		
-		for (String sign : AppConstants.SIGNS) {
-			statusHistory = statusHistoryMap.get(sign);
-			if (statusHistory != null) {
-				setCurrentStatusHoroText(p_currentStatus, sign, statusHistory.getHoroText());
-			} else {
-				unhandledSigns.add(sign);
-			}
-		}
-
-		if (!unhandledSigns.isEmpty()) {
-			List<HoroText> unsignedHoros = daoFacade.getHoroTextDao().getUnsignedHoroTextList();
-			
-			int maxCount = 0;
-			if (unsignedHoros.size() >= unhandledSigns.size()) {
-				maxCount = unhandledSigns.size();
-			} else {
-				maxCount = unsignedHoros.size();
-			}
-			
-			for (int i = 0; i < maxCount; i++) {
-				setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
+			StatusHistory statusHistory = null;
+		
+			for (String sign : AppConstants.SIGNS) {
+				statusHistory = statusHistoryMap.get(sign);
+				if (statusHistory != null) {
+					setCurrentStatusHoroText(p_currentStatus, sign, statusHistory.getHoroText());
+				} else {
+					unhandledSigns.add(sign);
+				}
 			}
 
-				
-		}
+			if (!unhandledSigns.isEmpty()) {
+				List<HoroText> unsignedHoros = daoFacade.getHoroTextDao().getUnsignedHoroTextList();
+			
+				int maxCount = 0;
+				if (unsignedHoros.size() >= unhandledSigns.size()) {
+					maxCount = unhandledSigns.size();
+				} else {
+					maxCount = unsignedHoros.size();
+				}	
+			
+				for (int i = 0; i < maxCount; i++) {
+					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
+				}
+			}
 		
-		daoFacade.getCurrentStatusDao().saveOrUpdate(p_currentStatus);
+			daoFacade.getCurrentStatusDao().saveOrUpdate(p_currentStatus);
+		}
 	}
 	
 	private void setCurrentStatusHoroText(com.hadean777.horo.persistence.pojo.CurrentStatus p_currentStatus, String p_sign, HoroText p_horoText) {

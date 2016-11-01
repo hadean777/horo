@@ -12,5 +12,10 @@ public interface CurrentStatusManager {
 	 * @return {@link CurrentStatus}
 	 */
 	public List<CurrentStatus> getCurrentStatusList(); 
+	
+	/**
+	 * Update current horos. <br>
+	 */
+	public void updateCurrentStatusList(); 
 
 }
