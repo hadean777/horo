@@ -51,8 +51,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		List<com.hadean777.horo.persistence.pojo.CurrentStatus> daoStatusList = daoFacade.getCurrentStatusDao().getCurrentStatuses();
 		
-		//TODO: Complete this method
-	
 		Map<String, com.hadean777.horo.persistence.pojo.CurrentStatus> currentStatusMap = cs.convertCurrentStatusListToMap(daoStatusList);
 		String displayType;
 		Date currentDate;
@@ -141,8 +139,8 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		
 		if (p_currentStatus != null) {
 		
-			List<StatusHistory> StatusHistories = daoFacade.getStatusHistoryDao().getStatusHistoryListByDateAndType(p_currentDate, p_type);
-			Map<String, StatusHistory> statusHistoryMap = cs.convertStatusHistoryListToMap(StatusHistories);
+			List<StatusHistory> statusHistories = daoFacade.getStatusHistoryDao().getStatusHistoryListByDateAndType(p_currentDate, p_type);
+			Map<String, StatusHistory> statusHistoryMap = cs.convertStatusHistoryListToMap(statusHistories);
 			p_currentStatus.setAssignedDate(p_currentDate);
 			List<String> unhandledSigns = new ArrayList<String>();
 		
@@ -152,6 +150,7 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 				statusHistory = statusHistoryMap.get(sign);
 				if (statusHistory != null) {
 					setCurrentStatusHoroText(p_currentStatus, sign, statusHistory.getHoroText());
+					//TODO update HoroText in DB
 				} else {
 					unhandledSigns.add(sign);
 				}
@@ -168,7 +167,10 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 				}	
 			
 				for (int i = 0; i < maxCount; i++) {
-					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));
+					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));	
+					statusHistory = new StatusHistory();
+					//TODO save new status histories
+					statusHistories.add(statusHistory);
 				}
 			}
 		
@@ -203,6 +205,16 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 		} else if (p_sign.equalsIgnoreCase(AppConstants.PIESCES)) {
 			p_currentStatus.setPiesces(p_horoText);
 		}
+		p_horoText.setShowNumber(p_horoText.getShowNumber() + 1);
+		p_horoText.setLastShowDate(p_currentStatus.getAssignedDate());
 	}
 
+	
+	public void generateStstusHistory(int p_days) {
+		Date beginDate = getSqlDateByOffset(-1);
+		Date endDate = getSqlDateByOffset(3);
+		List<StatusHistory> histories = daoFacade.getStatusHistoryDao().getDailyStatusHistoryListByInterval(beginDate, endDate);
+		//TODO complete this method
+		
+	}
 }

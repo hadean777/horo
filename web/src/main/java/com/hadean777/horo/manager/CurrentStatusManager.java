@@ -17,5 +17,11 @@ public interface CurrentStatusManager {
 	 * Update current horos. <br>
 	 */
 	public void updateCurrentStatusList(); 
+	
+	/**
+	 * Generate StatusHistories for future shows. <br>
+	 * @param p_days - nuber of days to generate StatusHistories based on current date {@link int}
+	 */
+	public void generateStstusHistory(int p_days);
 
 }
