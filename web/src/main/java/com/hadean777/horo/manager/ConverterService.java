@@ -70,6 +70,20 @@ public class ConverterService {
 		return result;
 	}
 	
+	
+	public Map<String, com.hadean777.horo.persistence.pojo.Sign> convertDaoSignsToMap(List<com.hadean777.horo.persistence.pojo.Sign> p) {
+		Map<String, com.hadean777.horo.persistence.pojo.Sign> result = null;
+		
+		if (p != null) {
+			result = new HashMap<String, com.hadean777.horo.persistence.pojo.Sign>();
+			for (com.hadean777.horo.persistence.pojo.Sign element : p) {
+				result.put(element.getName(), element);
+			}
+		}
+		
+		return result;
+	}
+	
 	private String getHotoText(com.hadean777.horo.persistence.pojo.HoroText horoText){
 		String result = null;
 		

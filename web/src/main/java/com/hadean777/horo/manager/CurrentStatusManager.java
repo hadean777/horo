@@ -22,6 +22,6 @@ public interface CurrentStatusManager {
 	 * Generate StatusHistories for future shows. <br>
 	 * @param p_days - nuber of days to generate StatusHistories based on current date {@link int}
 	 */
-	public void generateStstusHistory(int p_days);
+	public void generateStatusHistory(int p_days);
 
 }

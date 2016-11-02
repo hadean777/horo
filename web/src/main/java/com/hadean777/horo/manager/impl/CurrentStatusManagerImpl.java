@@ -15,6 +15,7 @@ import com.hadean777.horo.manager.CurrentStatusManager;
 import com.hadean777.horo.model.CurrentStatus;
 import com.hadean777.horo.persistence.DaoFacade;
 import com.hadean777.horo.persistence.pojo.HoroText;
+import com.hadean777.horo.persistence.pojo.Sign;
 import com.hadean777.horo.persistence.pojo.StatusHistory;
 
 
@@ -150,7 +151,6 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 				statusHistory = statusHistoryMap.get(sign);
 				if (statusHistory != null) {
 					setCurrentStatusHoroText(p_currentStatus, sign, statusHistory.getHoroText());
-					//TODO update HoroText in DB
 				} else {
 					unhandledSigns.add(sign);
 				}
@@ -158,6 +158,7 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 
 			if (!unhandledSigns.isEmpty()) {
 				List<HoroText> unsignedHoros = daoFacade.getHoroTextDao().getUnsignedHoroTextList();
+				Map<String, Sign> signs = cs.convertDaoSignsToMap(daoFacade.getSignDao().getAllSigns());
 			
 				int maxCount = 0;
 				if (unsignedHoros.size() >= unhandledSigns.size()) {
@@ -169,12 +170,16 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 				for (int i = 0; i < maxCount; i++) {
 					setCurrentStatusHoroText(p_currentStatus, unhandledSigns.get(i), unsignedHoros.get(i));	
 					statusHistory = new StatusHistory();
-					//TODO save new status histories
+					statusHistory.setSign(signs.get(unhandledSigns.get(i)));
+					statusHistory.setAssignedDate(p_currentDate);
+					statusHistory.setHoroText(unsignedHoros.get(i));
+					statusHistory.setHoroType(unsignedHoros.get(i).getHoroType());
 					statusHistories.add(statusHistory);
 				}
 			}
 		
 			daoFacade.getCurrentStatusDao().saveOrUpdate(p_currentStatus);
+			daoFacade.getStatusHistoryDao().bulkSaveOrUpdate(statusHistories);
 		}
 	}
 	
@@ -210,7 +215,7 @@ public class CurrentStatusManagerImpl implements CurrentStatusManager {
 	}
 
 	
-	public void generateStstusHistory(int p_days) {
+	public void generateStatusHistory(int p_days) {
 		Date beginDate = getSqlDateByOffset(-1);
 		Date endDate = getSqlDateByOffset(3);
 		List<StatusHistory> histories = daoFacade.getStatusHistoryDao().getDailyStatusHistoryListByInterval(beginDate, endDate);
